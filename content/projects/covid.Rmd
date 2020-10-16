@@ -1,14 +1,14 @@
 ---
-title: Covid-19
+title: 'Covid-19'
 date: "2020-10-16"
 description: 'CDC COVID-19 Public Use Data'
-draft: no
+draft: false
 image: pic07.jpg
 keywords: ""
 slug: 'covid'
 categories:
-- ""
-- ""
+    - ""
+    - ""
 ---
 
 # CDC COVID-19 Public Use Data
