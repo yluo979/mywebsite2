@@ -1,0 +1,22 @@
+---
+categories:
+- ""
+- ""
+date: "`r Sys.Date()`"
+description: ‘Self Introduction’
+draft: false
+image: intro.jpg
+keywords: ""
+slug: intro
+title: Self Introduction
+---
+
+## **Short introduction**
+
+* Born in Ningbo in China, a beautiful seaside city, Yu is a open-minded girl and always willing to explore more aspects of the world, such as studying in different countries, traveling around world.
+* Yu wants to learn specific and practical financial knowledge and get lasting friendship with diversified students in LBS. Gaining competence in job market is her goal in master stage.
+
+## **Background**
+* **Education Experience**: Yu holds a *BSc Economics* degree from Renmin University of China with an one-year exchange experience in University of California, Davis. Now, she is reading for *Master in Financial Analysis* degree in London Business school and *Master of Finance* degree in Tsinghua University.
+
+* **LinkedIn Link**: [Yu_Luo](https://www.linkedin.com/chatin/wnc/in/yu-luo-b91845183)

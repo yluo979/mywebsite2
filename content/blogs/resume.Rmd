@@ -1,8 +1,14 @@
 ---
-title: "resume"
-author: "Yu"
-date: "2020/10/16"
-output: html_document
+categories:
+- ""
+- ""
+date: "`r Sys.Date()`"
+description: ‘Resume’
+draft: false
+image:
+keywords: ""
+slug: resume
+title: Resume
 ---
 
 ```{r,eval=TRUE,echo=FALSE}

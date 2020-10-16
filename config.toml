@@ -1,5 +1,5 @@
 # Site settings
-baseURL = "http://example.org/"
+baseURL = "https://yluo-lbs.netlify.app/"
 languageCode = "en-us"
 title = "Portfolio website for Yu Luo"
 theme = "forty"
@@ -20,7 +20,7 @@ disqusShortname = ""
 
   # Provide your metadata here.
   name = "Yu"
-  description = "A open-minded and impact-driven girl studying in London Business School."
+  description = "MFA2021-LBS"
 
   # Link custom assets relative to /static
   custom_css = []
@@ -38,7 +38,7 @@ disqusShortname = ""
   # Navigation Section
   [params.navigation]
     title = "Yu Luo(Maggie)"
-    subtitle = "MFA2021 LBS"
+    subtitle = "MFA2021-LBS"
     menu = "Menu"
     # Optional logo as brand stored in img/
     # logo = "logo.png"
@@ -50,10 +50,14 @@ disqusShortname = ""
     [[params.navigation.links]]
       name = "Blogs"
       url = "blogs"
-
+      
     [[params.navigation.links]]
-      name = "Resume"
-      url = "blogs/resume"
+      name = "Projects"
+      url = "projects"
+      
+    #[[params.navigation.links]]
+    #  name = "Resume"
+    #  url = "blogs/resume"
 
     [[params.navigation.links]]
       name = "Elements"
@@ -72,9 +76,9 @@ disqusShortname = ""
       url = "blogs"
 
     # Button Style 2
-    [[params.navigation.button2]]
-      name = "Log In"
-      url = "#"
+    # [[params.navigation.button2]]
+    #  name = "Log In"
+    #  url = "#"
 
 
   # Banner section
@@ -90,36 +94,42 @@ disqusShortname = ""
   [params.tiles]
     enable = true
     # Display your showcases here.
-    
     [[params.tiles.showcase]]
-      title = "US Election"
-      subtitle = "2016 California Contributors Plots"
-      image = "pic01.jpg"
-      url = "blogs/election"
-
-    [[params.tiles.showcase]]
-      title = "Social Use"
-      subtitle = "General Social Survey (GSS)"
-      image = "pic02.jpg"
-      url = "blogs/social"
-
-    [[params.tiles.showcase]]
-      title = "Climate Change"
-      subtitle = "Climate change and temperature anomalies"
-      image = "pic03.jpg"
-      url = "blogs/climate"
-
-    [[params.tiles.showcase]]
-      title = "Covid-19"
-      subtitle = "CDC COVID-19 Public Use Data"
-      image = "pic04.jpg"
-      url = "blogs/covid"
-
+      title = "Introduction"
+      subtitle = ""
+      image = "pic05.jpg"
+       url = "blogs/intro"
+       
     [[params.tiles.showcase]]
       title = "Resume"
       subtitle = ""
       image = "pic06.jpg"
        url = "blogs/resume"
+       
+    [[params.tiles.showcase]]
+      title = "US Election"
+      subtitle = "2016 California Contributors Plots"
+      image = "pic01.jpg"
+      url = "projects/election"
+
+    [[params.tiles.showcase]]
+      title = "Social Use"
+      subtitle = "General Social Survey (GSS)"
+      image = "pic02.jpg"
+      url = "projects/social"
+
+    [[params.tiles.showcase]]
+      title = "Climate Change"
+      subtitle = "Climate change and temperature anomalies"
+      image = "pic03.jpg"
+      url = "projects/climate"
+
+    [[params.tiles.showcase]]
+      title = "Covid-19"
+      subtitle = "CDC COVID-19 Public Use Data"
+      image = "pic04.jpg"
+      url = "projects/covid"
+    
 
    # [[params.tiles.showcase]]
    #   title = "Etiam"
@@ -138,12 +148,8 @@ disqusShortname = ""
   # Section Type Two
   [params.two]
     enable = true
-    title = "Massa libero"
-    subtitle = """Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. 
-    Mauris aliquet magna magna sed nunc rhoncus pharetra. 
-    Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. 
-    Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero.
-    Mauris aliquet magna magna sed nunc rhoncus amet pharetra et feugiat tempus."""
+    title = "About me"
+    subtitle = """More about me"""
     buttonText = "Get Started"
     url = "blogs"
 
@@ -187,7 +193,7 @@ disqusShortname = ""
   # Footer section
   [params.footer]
     enable = true
-    copyright = "Company Name"
+    copyright = "Yu"
 
     # Uses font awesome icons
 
