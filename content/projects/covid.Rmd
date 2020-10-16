@@ -1,14 +1,14 @@
 ---
-categories:
-- ""
-- ""
-date: "`r Sys.Date()`"
+title: Covid-19
+date: "2020-10-16"
 description: 'CDC COVID-19 Public Use Data'
 draft: no
 image: pic07.jpg
 keywords: ""
 slug: 'covid'
-title: Covid-19
+categories:
+- ""
+- ""
 ---
 
 # CDC COVID-19 Public Use Data
