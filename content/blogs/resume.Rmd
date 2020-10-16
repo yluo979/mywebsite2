@@ -1,0 +1,11 @@
+---
+title: "resume"
+author: "Yu"
+date: "2020/10/16"
+output: html_document
+---
+
+```{r,eval=TRUE,echo=FALSE}
+knitr::include_graphics(here::here("static",'img','blogs', 'resume1.PNG'), error = FALSE)
+knitr::include_graphics(here::here("static",'img','blogs', 'resume2.PNG'), error = FALSE)
+```
