@@ -4,10 +4,10 @@ categories:
 - ""
 date: "`r Sys.Date()`"
 description: 'CDC COVID-19 Public Use Data'
-draft: false
+draft: no
 image: pic07.jpg
 keywords: ""
-slug: covid
+slug: 'covid'
 title: Covid-19
 ---
 
