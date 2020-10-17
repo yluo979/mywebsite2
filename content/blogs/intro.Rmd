@@ -3,7 +3,7 @@ categories:
 - ""
 - ""
 date: "`r Sys.Date()`"
-description: ‘Self Introduction’
+description: 
 draft: false
 image: intro.jpg
 keywords: ""

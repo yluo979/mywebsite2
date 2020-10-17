@@ -3,7 +3,7 @@ categories:
 - ""
 - ""
 date: "`r Sys.Date()`"
-description: ‘Climate change and temperature anomalies’
+description: Climate change and temperature anomalies
 draft: false
 image: pic08.jpg
 keywords: ""

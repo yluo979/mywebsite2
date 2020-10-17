@@ -3,9 +3,9 @@ categories:
 - ""
 - ""
 date: "`r Sys.Date()`"
-description: ‘Resume’
+description: My Resume
 draft: false
-image:
+image: pic06.jpg
 keywords: ""
 slug: resume
 title: Resume
