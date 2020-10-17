@@ -1,0 +1,282 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="MFA2021-LBS">
+	<meta name="author" content="Yu">
+	<meta name="generator" content="Hugo 0.75.1" />
+	<title>US Election &middot; Portfolio website for Yu Luo</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Yu Luo(Maggie)</strong> <span>MFA2021-LBS</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+                <li><a href="/blogs">Blogs</a></li>
+            
+                <li><a href="/projects">Projects</a></li>
+            
+                <li><a href="/blogs/resume">Resume</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="/blogs" class="button special fit">Get Started</a></li>
+            
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>US Election</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/projects/pic10.jpg" alt="" /></span>
+                            
+                            
+
+
+<p>I would like to make a plot that shows the top ten cities in highest amounts raised in political contributions in California during the 2016 US Presidential election.</p>
+<div id="useful-package-and-dataframes" class="section level1">
+<h1>Useful Package and Dataframes</h1>
+<pre class="r"><code># Useful packages for plot
+# install.packages(&#39;patchwork&#39;)
+# install.packages(&#39;tidytext&#39;)
+library(patchwork)
+library(tidytext)
+library(ggplot2)
+library(dplyr)</code></pre>
+<div id="match-zipcodes-with-cities" class="section level2">
+<h2>Match zipcodes with cities</h2>
+<p>To get this plot, first I join two dataframes; one you has with all contributions, and other used for translate zipcodes to cities.
+Then, I use zipcodes in main database to match cities in zipcodes database.</p>
+<pre class="r"><code># Import data, use vroom() as it is significantly faster than read.csv()
+CA_contributors_2016 &lt;- vroom::vroom(here::here(&quot;data&quot;,&quot;CA_contributors_2016.csv&quot;))
+zip_code&lt;-vroom::vroom(here::here(&quot;data&quot;,&quot;zip_code_database.csv&quot;),col_types=cols(
+  zip=col_double()))
+CA_zip&lt;-zip_code%&gt;%
+  filter(state==&quot;CA&quot;)
+CA_have_city&lt;-left_join(CA_contributors_2016,CA_zip,by=&#39;zip&#39;)</code></pre>
+</div>
+</div>
+<div id="ordinary-methods-putting-two-plots-together" class="section level1">
+<h1>Ordinary Methods putting two plots together</h1>
+<p>First, I filter contributors to Trump, Donald J. and use ggplot funtion to creat top 10 cities for him in descending order. Also I use same method to generate a same plot for Clinton, Hillary Rodham.</p>
+<pre class="r"><code>#draw plot for Donald
+D_contb&lt;-CA_have_city%&gt;%
+  filter(cand_nm ==&#39;Trump, Donald J.&#39;)%&gt;%
+  group_by(primary_city)%&gt;%
+  summarize(D_total_city=sum(contb_receipt_amt))%&gt;%
+  arrange(desc(D_total_city))%&gt;%
+  head(10)
+plot_1&lt;-ggplot(D_contb,aes(x=D_total_city,y=reorder(primary_city,D_total_city)))+
+  geom_col(fill=&#39;#CC3333&#39;)+
+  labs(x=&#39;Raised money&#39;,y=&#39;&#39;,title=&#39;Trump, Donald J.&#39;)+
+  theme(plot.title = element_text(size=12,hjust = 0.5, margin = margin(t = 5, b = 5)))+ 
+  scale_x_continuous(limits = c(0,600000),labels=scales::dollar_format())+
+  NULL
+plot_1</code></pre>
+<p><img src="/projects/election_files/figure-html/plots%20with%20patchwork-1.png" width="672" /></p>
+<pre class="r"><code>#draw plot for Hillary
+H_contb&lt;-CA_have_city%&gt;%
+  filter(cand_nm ==&#39;Clinton, Hillary Rodham&#39;)%&gt;%
+  group_by(primary_city)%&gt;%
+  summarize(H_total_city=sum(contb_receipt_amt))%&gt;%
+  arrange(desc(H_total_city))%&gt;%
+  head(10)
+theme_set(theme_bw())
+plot_2&lt;-ggplot(H_contb,aes(x=H_total_city,y=reorder(primary_city,H_total_city)))+
+  geom_col(fill=&#39;#0066CC&#39;)+
+  labs(x=&#39;Raised money&#39;,y=&#39;&#39;,title=&#39;Clinton, Hillary Rodham&#39;)+
+  theme(plot.title = element_text(size=12,hjust = 0.5, margin = margin(t = 5, b = 5)),legend.background = element_rect(fill=&#39;grey&#39;))+
+  scale_x_continuous(limits = c(0,13000000),labels=scales::dollar_format())+
+  NULL
+plot_2</code></pre>
+<p><img src="/projects/election_files/figure-html/plots%20with%20patchwork-2.png" width="672" />
+Then, I put these two plots together for a combined plot and put a overall title.</p>
+<pre class="r"><code>#combine two plots
+plot_2+plot_1+
+  plot_annotation(title=&#39;Where did candidates raise most money?&#39;,theme=theme(plot.title = element_text(size = 12)))+
+  plot_layout(ncol=NULL,nrow=NULL)</code></pre>
+<p><img src="/projects/election_files/figure-html/plots%20with%20patchwork2-1.png" width="672" /></p>
+</div>
+<div id="make-two-plots-at-same-time-with-facet-function" class="section level1">
+<h1>Make two plots at same time with facet function</h1>
+<p>To make work easier, I try to generate the plot in one step.
+So, I try to filter 10 cities databases for two candidates and combine them in one database. Then, I can create the plot in that simplified and combind database.</p>
+<pre class="r"><code>#get 10 cities for Hillary
+H&lt;-CA_have_city%&gt;%
+  filter(cand_nm==&#39;Clinton, Hillary Rodham&#39;)%&gt;%
+  group_by(primary_city) %&gt;%
+  summarise(total_contb=sum(contb_receipt_amt),cand_nm=&#39;Clinton, Hillary Rodham&#39;)%&gt;%
+  arrange(desc(total_contb))%&gt;%
+  head(10)
+
+#get 10 cities for Trump
+D&lt;-CA_have_city%&gt;%
+  filter(cand_nm==&#39;Trump, Donald J.&#39;)%&gt;%
+  group_by(primary_city) %&gt;%
+  summarise(total_contb=sum(contb_receipt_amt),cand_nm=&#39;Trump, Donald J.&#39;)%&gt;%
+  arrange(desc(total_contb))%&gt;%
+  head(10)
+
+X&lt;-bind_rows(H,D,id=NULL)
+
+X%&gt;%
+  mutate(cand_nm = as.factor(cand_nm),
+           primary_city = reorder_within(primary_city, total_contb, cand_nm)) %&gt;%
+  ggplot(aes(x=reorder(primary_city,total_contb), y=total_contb, fill = cand_nm)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~cand_nm, scales = &quot;free&quot;) +
+  coord_flip() +
+  labs(y = &quot;Raised Money&quot;,
+        x = NULL,
+        title = &quot;Where did candidates raise most money?&quot;)+
+  scale_y_continuous(labels=scales::dollar_format())+
+  scale_x_reordered()+
+  NULL</code></pre>
+<p><img src="/projects/election_files/figure-html/plots%20with%20facet-1.png" width="672" /></p>
+</div>
+<div id="expand-same-plot-for-top-10-candidates" class="section level1">
+<h1>Expand: Same plot for top 10 candidates</h1>
+<p>After this, I want to expand my plot and create the same plot for the top 10 candidates and not just the top two. So, I get top 10 candidates names from original dataframe, and use name list to filter their contributors in dataframe and calculate sum of cities. Then, I keep the top 10 cites for every catagory(candidates) in dataframe. Last, use the 100 rows dataframe to create plot.</p>
+<pre class="r"><code>#get top 10 candidates&#39; names
+top10&lt;-CA_have_city%&gt;%
+  group_by(cand_nm)%&gt;%
+  summarise(total=sum(contb_receipt_amt))%&gt;%
+  arrange(desc(total))%&gt;%
+  head(10)%&gt;%
+  ungroup
+
+#get top 10 candidates&#39; total amounts in cities
+top10_contb&lt;-CA_have_city%&gt;%
+  filter(cand_nm==top10$cand_nm)%&gt;%
+  group_by(cand_nm) %&gt;%
+  group_by(primary_city) %&gt;%
+  mutate(total_contb=sum(contb_receipt_amt))%&gt;%
+  distinct(primary_city,.keep_all=TRUE)%&gt;%
+  ungroup</code></pre>
+<pre><code>## Warning in cand_nm == top10$cand_nm: 长的对象长度不是短的对象长度的整倍数</code></pre>
+<pre class="r"><code>#filter top 10 cities in dataframe for everyone
+library(data.table)
+top10_contb&lt;-setorder(setkey(setDT(top10_contb), cand_nm), cand_nm, -total_contb)[
+                                          ,.SD[1:10], by=cand_nm]
+#uese facet again
+top10_contb%&gt;%
+  mutate(cand_nm = as.factor(cand_nm),
+           primary_city = reorder_within(primary_city, total_contb, cand_nm)) %&gt;%
+  ggplot(aes(reorder(primary_city,total_contb), total_contb, fill = cand_nm)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~cand_nm, scales = &quot;free&quot;) +
+  coord_flip() +
+  labs(y = &quot;Raised Money&quot;,
+        x = NULL,
+        title = &quot;Where did candidates raise most money?&quot;)+
+  scale_y_continuous(labels=scales::dollar_format())+
+  scale_x_reordered() +
+  NULL</code></pre>
+<pre><code>## Warning: Removed 8 rows containing missing values (position_stack).</code></pre>
+<p><img src="/projects/election_files/figure-html/top10%20candidates-1.png" width="672" /></p>
+</div>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://www.facebook.com/maggie.luo.90834" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                
+                    <li><a href="https://www.instagram.com/owl_c_m/" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+                
+                    <li><a href="https://www.github.com/yluo979" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/yu-maggie-luo-b91845183" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Yu</li>
+                
+                <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>

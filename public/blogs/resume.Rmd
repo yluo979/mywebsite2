@@ -1,0 +1,17 @@
+---
+categories:
+- ""
+- ""
+date: "`r Sys.Date()`"
+description: ‘Resume’
+draft: false
+image:
+keywords: ""
+slug: resume
+title: Resume
+---
+
+```{r,eval=TRUE,echo=FALSE}
+knitr::include_graphics(here::here("static",'img','blogs', 'resume1.PNG'), error = FALSE)
+knitr::include_graphics(here::here("static",'img','blogs', 'resume2.PNG'), error = FALSE)
+```

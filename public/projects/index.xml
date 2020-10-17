@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lifestyle on Portfolio website for Yu Luo</title>
+    <link>/projects/</link>
+    <description>Recent content in Lifestyle on Portfolio website for Yu Luo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 31 Oct 2017 22:27:21 -0500</lastBuildDate><atom:link href="/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Climate Change</title>
+      <link>/projects/climate/</link>
+      <pubDate>Sat, 17 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/climate/</guid>
+      <description>I want to study climate change, with data on the Combined Land-Surface Air and Sea-Surface Water Temperature Anomalies in the Northern Hemisphere at NASA’s Goddard Institute for Space Studies. The tabular data of temperature anomalies can be found here
+To define temperature anomalies I need to have a reference, or base, period which NASA clearly states that it is the period between 1951-1980.
+Run the code below to load the file:</description>
+    </item>
+    
+    <item>
+      <title>US Election</title>
+      <link>/projects/election/</link>
+      <pubDate>Sat, 17 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/election/</guid>
+      <description>I would like to make a plot that shows the top ten cities in highest amounts raised in political contributions in California during the 2016 US Presidential election.
+Useful Package and Dataframes# Useful packages for plot# install.packages(&amp;#39;patchwork&amp;#39;)# install.packages(&amp;#39;tidytext&amp;#39;)library(patchwork)library(tidytext)library(ggplot2)library(dplyr)Match zipcodes with citiesTo get this plot, first I join two dataframes; one you has with all contributions, and other used for translate zipcodes to cities.</description>
+    </item>
+    
+    <item>
+      <title>Covid-19</title>
+      <link>/projects/covid/</link>
+      <pubDate>Fri, 16 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/covid/</guid>
+      <description>CDC COVID-19 Public Use DataVisit the CDC Covid-19 Case Surveillance Data. There are well over 3 million entries of individual, de-identified patient data. Since this is a large file.
+url&amp;lt;-&amp;#39;https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD&amp;#39;covid_data &amp;lt;- vroom::vroom(url)%&amp;gt;% clean_names()glimpse(covid_data)knitr::include_graphics(here::here(&amp;quot;static&amp;quot;,&amp;#39;img&amp;#39;,&amp;#39;blogs&amp;#39;, &amp;#39;covid1.PNG&amp;#39;), error = FALSE)Given the data, I would like to produce two graphs that show death % rate:
+by age group, sex, and whether the patient had co-morbidities or notby age group, sex, and whether the patient was admited to Intensive Care Unit (ICU) or not.</description>
+    </item>
+    
+    <item>
+      <title>Social Uses</title>
+      <link>/projects/social/</link>
+      <pubDate>Tue, 31 Oct 2017 22:26:09 -0500</pubDate>
+      
+      <guid>/projects/social/</guid>
+      <description>General Social Survey (GSS)The General Social Survey (GSS) gathers data on American society in order to monitor and explain trends in attitudes, behaviours, and attributes. Many trends have been tracked for decades, so one can see the evolution of attitudes, etc in American Society.
+In this project I want to analyze data from the 2016 GSS sample data, using it to estimate values of population parameters of interest about US adults.</description>
+    </item>
+    
+  </channel>
+</rss>

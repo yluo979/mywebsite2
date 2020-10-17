@@ -1,0 +1,544 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="MFA2021-LBS">
+	<meta name="author" content="Yu">
+	<meta name="generator" content="Hugo 0.75.1" />
+	<title>Social Uses &middot; Portfolio website for Yu Luo</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Yu Luo(Maggie)</strong> <span>MFA2021-LBS</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+                <li><a href="/blogs">Blogs</a></li>
+            
+                <li><a href="/projects">Projects</a></li>
+            
+                <li><a href="/blogs/resume">Resume</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="/blogs" class="button special fit">Get Started</a></li>
+            
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Social Uses</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/projects/pic09.jpg" alt="" /></span>
+                            
+                            
+
+
+<div id="general-social-survey-gss" class="section level1">
+<h1>General Social Survey (GSS)</h1>
+<p>The <a href="http://www.gss.norc.org/">General Social Survey (GSS)</a> gathers data on American society in order to monitor and explain trends in attitudes, behaviours, and attributes. Many trends have been tracked for decades, so one can see the evolution of attitudes, etc in American Society.</p>
+<p>In this project I want to analyze data from the <strong>2016 GSS sample data</strong>, using it to estimate values of <em>population parameters</em> of interest about US adults.</p>
+<pre class="r"><code>gss &lt;- read_csv(here::here(&quot;data&quot;, &quot;smallgss2016.csv&quot;), 
+                na = c(&quot;&quot;, &quot;Don&#39;t know&quot;,
+                       &quot;No answer&quot;, &quot;Not applicable&quot;))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   emailmin = col_character(),
+##   emailhr = col_character(),
+##   snapchat = col_character(),
+##   instagrm = col_character(),
+##   twitter = col_character(),
+##   sex = col_character(),
+##   degree = col_character()
+## )</code></pre>
+<p>I notice that many responses should not be taken into consideration, like “No Answer”, “Don’t Know”, “Not applicable”, “Refused to Answer”.</p>
+<p>I will be creating 95% confidence intervals for population parameters. The variables we have are the following:</p>
+<ul>
+<li>hours and minutes spent on email weekly. The responses to these questions are recorded in the <code>emailhr</code> and <code>emailmin</code> variables. For example, if the response is 2.50 hours, this would be recorded as emailhr = 2 and emailmin = 30.</li>
+<li><code>snapchat</code>, <code>instagrm</code>, <code>twitter</code>: whether respondents used these social media in 2016</li>
+<li><code>sex</code>: Female - Male</li>
+<li><code>degree</code>: highest education level attained</li>
+</ul>
+<div id="instagram-and-snapchat-by-sex" class="section level2">
+<h2>Instagram and Snapchat, by sex</h2>
+<p>First, I want to estimate the <em>population</em> proportion of Snapchat or Instagram users in 2016</p>
+<div id="new-variable-snap_insta" class="section level3">
+<h3>New variable snap_insta</h3>
+<p>Create a new variable, <code>snap_insta</code> that is <em>Yes</em> if the respondent reported using any of Snapchat (<code>snapchat</code>) or Instagram (<code>instagrm</code>), and <em>No</em> if not. If the recorded value was NA for both of these questions, the value in your new variable should also be NA.</p>
+<pre class="r"><code>gss&lt;-gss%&gt;%
+  mutate(snap_insta=ifelse(snapchat==&#39;Yes&#39;|instagrm==&#39;Yes&#39;,&#39;Yes&#39;, ifelse(snapchat==&#39;NA&#39;&amp;instagrm==&#39;NA&#39;,&#39;NA&#39;,&#39;No&#39;)))
+gss</code></pre>
+<pre><code>## # A tibble: 2,867 x 8
+##    emailmin emailhr snapchat instagrm twitter sex    degree         snap_insta
+##    &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt;     
+##  1 0        12      NA       NA       NA      Male   Bachelor       NA        
+##  2 30       0       No       No       No      Male   High school    No        
+##  3 NA       NA      No       No       No      Male   Bachelor       No        
+##  4 10       0       NA       NA       NA      Female High school    NA        
+##  5 NA       NA      Yes      Yes      No      Female Graduate       Yes       
+##  6 0        2       No       Yes      No      Female Junior college Yes       
+##  7 0        40      NA       NA       NA      Male   High school    NA        
+##  8 NA       NA      Yes      Yes      No      Female High school    Yes       
+##  9 0        0       NA       NA       NA      Male   High school    NA        
+## 10 NA       NA      No       No       No      Male   Junior college No        
+## # ... with 2,857 more rows</code></pre>
+</div>
+<div id="calculate-proportion" class="section level3">
+<h3>Calculate proportion</h3>
+<p>Calculate the proportion of Yes’s for <code>snap_insta</code> among those who answered the question, excluding NAs.</p>
+<pre class="r"><code>excluding_NA&lt;-gss%&gt;%
+  filter(snap_insta!=&#39;NA&#39;)
+list_exluding_NA&lt;-table(excluding_NA$snap_insta)/sum(table(excluding_NA$snap_insta))
+list_exluding_NA[2]</code></pre>
+<pre><code>##       Yes 
+## 0.3746356</code></pre>
+</div>
+<div id="ci-formula" class="section level3">
+<h3>CI formula</h3>
+<p>Using the CI formula for proportions, construct 95% CIs for men and women who used either Snapchat or Instagram.</p>
+<pre class="r"><code>#calculate proportion in men
+men&lt;-gss%&gt;%
+  filter(snap_insta!=&#39;NA&#39;&amp; sex==&#39;Male&#39;)
+list_men&lt;-table(men$snap_insta)/sum(table(men$snap_insta))
+list_men</code></pre>
+<pre><code>## 
+##       No      Yes 
+## 0.681592 0.318408</code></pre>
+<pre class="r"><code>men_prop&lt;-list_men[2]
+#construct men CI
+men_formula_ci &lt;- men %&gt;% 
+  summarise(count=n(),
+            t_critical=qt(0.975,count-1),
+            se_men_prop=sqrt(men_prop*(1-men_prop)/count),
+            margin_of_error=t_critical*se_men_prop,
+            men_prop_low=men_prop-margin_of_error,
+            men_prop_high=men_prop+margin_of_error)
+men_formula_ci</code></pre>
+<pre><code>## # A tibble: 1 x 6
+##   count t_critical se_men_prop margin_of_error men_prop_low men_prop_high
+##   &lt;int&gt;      &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt;
+## 1   603       1.96      0.0190          0.0373        0.281         0.356</code></pre>
+<pre class="r"><code>#calculate proportion in women
+women&lt;-gss%&gt;%
+  filter(snap_insta!=&#39;NA&#39;&amp; sex==&#39;Female&#39;)
+list_women&lt;-table(women$snap_insta)/sum(table(women$snap_insta))
+list_women</code></pre>
+<pre><code>## 
+##        No       Yes 
+## 0.5812744 0.4187256</code></pre>
+<pre class="r"><code>women_prop&lt;-list_women[2]
+#construct women CI
+women_formula_ci &lt;- women %&gt;% 
+  summarise(count=n(),
+            t_critical=qt(0.975,count-1),
+            se_women_prop=sqrt(women_prop*(1-women_prop)/count),
+            margin_of_error=t_critical*se_women_prop,
+            women_prop_low=women_prop-margin_of_error,
+            women_prop_high=women_prop+margin_of_error)
+women_formula_ci</code></pre>
+<pre><code>## # A tibble: 1 x 6
+##   count t_critical se_women_prop margin_of_error women_prop_low women_prop_high
+##   &lt;int&gt;      &lt;dbl&gt;         &lt;dbl&gt;           &lt;dbl&gt;          &lt;dbl&gt;           &lt;dbl&gt;
+## 1   769       1.96        0.0178          0.0349          0.384           0.454</code></pre>
+<p>The 95% CI for men is [0.281,0.356] and for women is [0.384,0.454].</p>
+</div>
+</div>
+<div id="twitter-by-education-level" class="section level2">
+<h2>Twitter, by education level</h2>
+<p>Estimate the <em>population</em> proportion of Twitter users by education level in 2016.</p>
+<p>There are 5 education levels in variable <code>degree</code> which, in ascending order of years of education, are Lt high school, High School, Junior college, Bachelor, Graduate.</p>
+<div id="create-factor-variable" class="section level3">
+<h3>Create factor variable</h3>
+<p>So, Turn <code>degree</code> from a character variable into a factor variable. Make sure the order is the correct one and that levels are not sorted alphabetically which is what R by default does.</p>
+<pre class="r"><code>gss$degree&lt;-factor(gss$degree,ordered = TRUE,levels = c(&quot;Lt high school&quot;, &quot;High School&quot;, &quot;Junior college&quot;, &quot;Bachelor&quot;,&quot;Graduate&quot;))
+skim(gss$degree)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-4">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">gss$degree</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">2867</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">factor</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">data</td>
+<td align="right">1469</td>
+<td align="right">0.49</td>
+<td align="left">TRUE</td>
+<td align="right">4</td>
+<td align="left">Bac: 536, Lt : 328, Gra: 318, Jun: 216</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="create-variable" class="section level3">
+<h3>Create variable</h3>
+<p>Create a new variable, <code>bachelor_graduate</code> that is <em>Yes</em> if the respondent has either a <code>Bachelor</code> or <code>Graduate</code> degree. As before, if the recorded value for either was NA, the value in your new variable should also be NA.</p>
+<pre class="r"><code>gss&lt;-gss%&gt;%
+  mutate(bachelor_graduate=ifelse(degree==&#39;Bachelor&#39;|degree==&#39;Graduate&#39;,&#39;Yes&#39;,ifelse(degree==&#39;NA&#39;,&#39;NA&#39;,&#39;No&#39;)))
+skim(gss$bachelor_graduate)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-5">Table 2: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">gss$bachelor_graduate</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">2867</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">data</td>
+<td align="right">1469</td>
+<td align="right">0.49</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="calculate-proportion-1" class="section level3">
+<h3>Calculate proportion</h3>
+<p>Then, Calculate the proportion of <code>bachelor_graduate</code> who do (Yes) and who don’t (No) use twitter.</p>
+<pre class="r"><code>bac_grad&lt;-gss%&gt;%
+  filter(bachelor_graduate==&#39;Yes&#39;&amp; twitter!=&#39;NA&#39;)
+use_list&lt;-table(bac_grad$twitter)/sum(table(bac_grad$twitter))
+use_list</code></pre>
+<pre><code>## 
+##        No       Yes 
+## 0.7668712 0.2331288</code></pre>
+<pre class="r"><code>no_prop&lt;-use_list[1]
+yes_prop&lt;-use_list[2]</code></pre>
+</div>
+<div id="construct-ci" class="section level3">
+<h3>Construct CI</h3>
+<p>Using the CI formula for proportions, construct two 95% CIs for <code>bachelor_graduate</code> vs whether they use (Yes) and don’t (No) use twitter.</p>
+<pre class="r"><code>yes_formula_ci &lt;- bac_grad %&gt;% 
+  summarise(count=n(),
+            t_critical=qt(0.975,count-1),
+            se_yes_prop=sqrt(yes_prop*(1-yes_prop)/count),
+            margin_of_error=t_critical*se_yes_prop,
+            yes_prop_low=yes_prop-margin_of_error,
+            yes_prop_high=yes_prop+margin_of_error)
+yes_formula_ci</code></pre>
+<pre><code>## # A tibble: 1 x 6
+##   count t_critical se_yes_prop margin_of_error yes_prop_low yes_prop_high
+##   &lt;int&gt;      &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt;
+## 1   489       1.96      0.0191          0.0376        0.196         0.271</code></pre>
+<pre class="r"><code>no_formula_ci &lt;- bac_grad %&gt;% 
+  summarise(count=n(),
+            t_critical=qt(0.975,count-1),
+            se_no_prop=sqrt(no_prop*(1-no_prop)/count),
+            margin_of_error=t_critical*se_no_prop,
+            no_prop_low=no_prop-margin_of_error,
+            no_prop_high=no_prop+margin_of_error)
+no_formula_ci</code></pre>
+<pre><code>## # A tibble: 1 x 6
+##   count t_critical se_no_prop margin_of_error no_prop_low no_prop_high
+##   &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
+## 1   489       1.96     0.0191          0.0376       0.729        0.804</code></pre>
+<p>95% CIs for <code>bachelor_graduate</code> use twitter is [0.196,0.271] and don’t use twitter is [0.7290.804].</p>
+<p>These two Confidence Intervals don’t overlap. The following graph could prove that:</p>
+<pre class="r"><code>formula_ci_twitter&lt;- bac_grad %&gt;% 
+  mutate(prop=ifelse(twitter==&#39;Yes&#39;,0.233,0.767))%&gt;%
+  mutate(count=n())%&gt;%
+  group_by(twitter)%&gt;%
+  summarise(t_critical=qt(0.975,count-1),
+            se_prop=sqrt(prop*(1-prop)/count),
+            margin_of_error=t_critical*se_prop,
+            prop_low=prop-margin_of_error,
+            prop_high=prop+margin_of_error,
+            prop=prop)%&gt;%
+  distinct(twitter,.keep_all = TRUE)</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;twitter&#39; (override with `.groups` argument)</code></pre>
+<pre class="r"><code>ggplot(formula_ci_twitter, aes(x=reorder(twitter, prop), y=prop, colour=twitter)) +
+  geom_point() +
+  geom_errorbar(width=.5, aes(ymin=prop_low, ymax=prop_high)) + 
+  labs(x=&quot; &quot;,
+       y= &quot;Proportion whether use Twitter&quot;, 
+       title=&quot;Twitter Use Proportion for Bachelor and Graduate&quot;) + 
+  theme_bw()+
+  coord_flip()+
+  theme(legend.position = &quot;none&quot;)+
+  NULL</code></pre>
+<p><img src="/projects/social_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+</div>
+<div id="email-usage" class="section level2">
+<h2>Email usage</h2>
+<p>I want to estimate the <em>population</em> parameter on time spent on email weekly.</p>
+<div id="create-variable-1" class="section level3">
+<h3>Create variable</h3>
+<p>Create a new variable called <code>email</code> that combines <code>emailhr</code> and <code>emailmin</code> to reports the number of minutes the respondents spend on email weekly.</p>
+<pre class="r"><code>gss &lt;- gss %&gt;% 
+  mutate(emailmin = as.numeric(emailmin), emailhr = as.numeric(emailhr)) %&gt;% 
+  mutate(email= emailmin + emailhr * 60)</code></pre>
+<pre><code>## Warning: Problem with `mutate()` input `emailmin`.
+## i 强制改变过程中产生了NA
+## i Input `emailmin` is `as.numeric(emailmin)`.</code></pre>
+<pre><code>## Warning in mask$eval_all_mutate(dots[[i]]): 强制改变过程中产生了NA</code></pre>
+<pre><code>## Warning: Problem with `mutate()` input `emailhr`.
+## i 强制改变过程中产生了NA
+## i Input `emailhr` is `as.numeric(emailhr)`.</code></pre>
+<pre><code>## Warning in mask$eval_all_mutate(dots[[i]]): 强制改变过程中产生了NA</code></pre>
+<pre class="r"><code>gss</code></pre>
+<pre><code>## # A tibble: 2,867 x 10
+##    emailmin emailhr snapchat instagrm twitter sex   degree snap_insta
+##       &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;ord&gt;  &lt;chr&gt;     
+##  1        0      12 NA       NA       NA      Male  Bache~ NA        
+##  2       30       0 No       No       No      Male  &lt;NA&gt;   No        
+##  3       NA      NA No       No       No      Male  Bache~ No        
+##  4       10       0 NA       NA       NA      Fema~ &lt;NA&gt;   NA        
+##  5       NA      NA Yes      Yes      No      Fema~ Gradu~ Yes       
+##  6        0       2 No       Yes      No      Fema~ Junio~ Yes       
+##  7        0      40 NA       NA       NA      Male  &lt;NA&gt;   NA        
+##  8       NA      NA Yes      Yes      No      Fema~ &lt;NA&gt;   Yes       
+##  9        0       0 NA       NA       NA      Male  &lt;NA&gt;   NA        
+## 10       NA      NA No       No       No      Male  Junio~ No        
+## # ... with 2,857 more rows, and 2 more variables: bachelor_graduate &lt;chr&gt;,
+## #   email &lt;dbl&gt;</code></pre>
+</div>
+<div id="visualization" class="section level3">
+<h3>Visualization</h3>
+<p>Visualise the distribution of this new variable. Find the mean and the median number of minutes respondents spend on email weekly.</p>
+<pre class="r"><code>gss_email &lt;- gss %&gt;% 
+  drop_na(email) 
+
+ggplot(gss_email, aes(x= email)) +
+  geom_histogram() +
+  theme_bw() +
+  xlab(&quot;Time spent on email&quot;) +
+  ylab(&quot;Frequancy&quot;) +
+  ggtitle(&quot;Distribution of Email&quot;)</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/projects/social_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre class="r"><code>summarise(gss_email, mean_mins_email =  mean(gss_email$email), median_mins_email = median(gss_email$email))</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##   mean_mins_email median_mins_email
+##             &lt;dbl&gt;             &lt;dbl&gt;
+## 1            417.               120</code></pre>
+<p>Median is a better measurement to represent the typical amount of time Americans spend on email weekly. This is because there are outliers on the weekly usage of email which skewed the mean and caused the standard devation to be high.</p>
+</div>
+<div id="calculate-ci-with-infer" class="section level3">
+<h3>Calculate CI with infer</h3>
+<p>Using the <code>infer</code> package, calculate a 95% bootstrap confidence interval for the mean amount of time Americans spend on email weekly.</p>
+<pre class="r"><code>library(infer)
+gss_boot_email &lt;- gss %&gt;% 
+  drop_na(email) %&gt;% 
+  specify(response = email) %&gt;% 
+  generate(reps = 1000, type = &quot;bootstrap&quot;) %&gt;%
+  calculate(stat = &quot;mean&quot;)
+
+email_ci &lt;- gss_boot_email %&gt;% 
+  get_confidence_interval(
+    level = 0.95,
+    type = &quot;percentile&quot;,
+    point_estimate = NULL
+  ) 
+
+email_lower_ci_hour &lt;- email_ci$lower_ci%/%60
+email_lower_ci_min &lt;- email_ci$lower_cilower_ci%%60</code></pre>
+<pre><code>## Warning: Unknown or uninitialised column: `lower_cilower_ci`.</code></pre>
+<pre class="r"><code>email_upper_ci_hour &lt;- email_ci$upper_ci%/%60
+email_upper_ci_min &lt;- email_ci$upper_ci%%60
+
+
+paste(&quot;Lower 95% CI email usage:&quot;, email_ci$lower_ci%/%60 , &quot;hours and&quot;, round(email_ci$lower_ci%%60, digits = 0), &quot;minutes&quot;) </code></pre>
+<pre><code>## [1] &quot;Lower 95% CI email usage: 6 hours and 24 minutes&quot;</code></pre>
+<pre class="r"><code>paste(&quot;Upper 95% CI email usage:&quot;, email_ci$upper_ci%/%60, &quot;hours and&quot;, round(email_ci$upper_ci%%60, digits = 0), &quot;minutes&quot;) </code></pre>
+<pre><code>## [1] &quot;Upper 95% CI email usage: 7 hours and 29 minutes&quot;</code></pre>
+<p>As comparison to the 95% confidence interval, I would expect the 99% confidence interval to be wider. For the 95% confidence interval, we are confident that 95% of the sample fall between 6 hours and 27 minutes and 7 hours and 29 minutes. Thus, the 99% confience interval would be wider as the lower interval would need to be smaller than 6 hours and 27 minutes and the upper interval would need to be larger than 7 hours and 29 minutes, resulting that we can predict with 99% confidence that the value within this range.</p>
+</div>
+</div>
+</div>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://www.facebook.com/maggie.luo.90834" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                
+                    <li><a href="https://www.instagram.com/owl_c_m/" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+                
+                    <li><a href="https://www.github.com/yluo979" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/yu-maggie-luo-b91845183" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Yu</li>
+                
+                <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>

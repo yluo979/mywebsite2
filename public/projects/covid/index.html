@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="MFA2021-LBS">
+	<meta name="author" content="Yu">
+	<meta name="generator" content="Hugo 0.75.1" />
+	<title>Covid-19 &middot; Portfolio website for Yu Luo</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Yu Luo(Maggie)</strong> <span>MFA2021-LBS</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+                <li><a href="/blogs">Blogs</a></li>
+            
+                <li><a href="/projects">Projects</a></li>
+            
+                <li><a href="/blogs/resume">Resume</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="/blogs" class="button special fit">Get Started</a></li>
+            
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Covid-19</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/projects/pic07.jpg" alt="" /></span>
+                            
+                            
+
+
+<div id="cdc-covid-19-public-use-data" class="section level1">
+<h1>CDC COVID-19 Public Use Data</h1>
+<p>Visit the <a href="https://data.cdc.gov/Case-Surveillance/COVID-19-Case-Surveillance-Public-Use-Data/vbim-akqf">CDC Covid-19 Case Surveillance Data</a>. There are well over 3 million entries of individual, de-identified patient data. Since this is a large file.</p>
+<pre class="r"><code>url&lt;-&#39;https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD&#39;
+covid_data &lt;- vroom::vroom(url)%&gt;% 
+  clean_names()
+glimpse(covid_data)</code></pre>
+<pre class="r"><code>knitr::include_graphics(here::here(&quot;static&quot;,&#39;img&#39;,&#39;blogs&#39;, &#39;covid1.PNG&#39;), error = FALSE)</code></pre>
+<p><img src="C:/Users/DELL/Desktop/LBS%20Preparation/Data%20Analytics%20for%20Finance/Git/mywebsite2/static/img/blogs/covid1.PNG" width="696" /></p>
+<p>Given the data, I would like to produce two graphs that show death % rate:</p>
+<ol style="list-style-type: decimal">
+<li>by age group, sex, and whether the patient had co-morbidities or not</li>
+<li>by age group, sex, and whether the patient was admited to Intensive Care Unit (ICU) or not.</li>
+</ol>
+<div id="creating-graph-no.1" class="section level2">
+<h2>Creating graph No.1</h2>
+<pre class="r"><code># Step 1: filtering variables of interest to exclude missing values
+covid_death_rate_comorbidities &lt;- covid_data %&gt;% 
+  filter(sex %in% c(&#39;Male&#39;,&#39;Female&#39;), !age_group %in% c(&#39;Unknown&#39;, NA), medcond_yn %in% c(&#39;Yes&#39;,&#39;No&#39;),death_yn %in% c(&#39;Yes&#39;,&#39;No&#39;)) %&gt;%  
+
+# Step 2: selecting only the four variables needed for this graph 
+select(sex,age_group,death_yn,medcond_yn) %&gt;%
+
+# Step 3: grouping the variables since we re interested in the death rate across age group, sex and whether the patient had co-morbities or not
+group_by(sex,age_group,medcond_yn) %&gt;% 
+
+# Step 4: calculating the death rate as a percentage value
+summarize(death_tot=sum(death_yn==&#39;Yes&#39;),total=n()) %&gt;% 
+mutate(death_rate=(death_tot/total*100)) %&gt;%
+select(sex,age_group,death_rate,medcond_yn) 
+
+new_labels&lt;-c(&#39;Yes&#39;=&#39;With Comorbidities&#39;,&#39;No&#39;=&#39;Without Comorbidities&#39;)
+
+# Step 5: plotting 
+ggplot(covid_death_rate_comorbidities,aes(x=death_rate,y=age_group))+
+  geom_col(fill=&#39;#8b9dc3&#39;)+
+  facet_grid(medcond_yn~sex,as.table=FALSE,labeller=labeller(medcond_yn=new_labels))+
+  geom_text(aes(label=round(death_rate,digits=1)),hjust=-0.1,size=3)+
+  expand_limits(x=c(2))+
+  theme_bw()+
+  scale_x_continuous ()+
+  labs(title=&#39;Covid death % by age group, sex, and presence of co-morbidities&#39;,x=&#39;&#39;,y=&#39;&#39;,caption=&#39;Source: CDC&#39;)+
+  theme(plot.title=element_text(size=12))</code></pre>
+<pre class="r"><code>knitr::include_graphics(here::here(&quot;static&quot;,&#39;img&#39;,&#39;blogs&#39;, &#39;covid2.PNG&#39;), error = FALSE)</code></pre>
+<p><img src="C:/Users/DELL/Desktop/LBS%20Preparation/Data%20Analytics%20for%20Finance/Git/mywebsite2/static/img/blogs/covid2.PNG" width="624" /></p>
+</div>
+<div id="creating-graph-no.2" class="section level2">
+<h2>Creating graph No.2</h2>
+<pre class="r"><code># Step 1: filtering variables of interest to exclude missing values
+covid_death_rate_icu &lt;- covid_data %&gt;% 
+  filter(sex %in% c(&#39;Male&#39;,&#39;Female&#39;), !age_group %in% c(&#39;Unknown&#39;, NA), icu_yn %in% c(&#39;Yes&#39;,&#39;No&#39;),death_yn %in% c(&#39;Yes&#39;,&#39;No&#39;)) %&gt;%  
+
+# Step 2: selecting only the four variables needed for this graph 
+select(sex,age_group,death_yn,icu_yn) %&gt;%
+
+# Step 3: grouping the variables since we re interested in the death rate across age group, sex and whether the patient had co-morbities or not
+group_by(sex,age_group,icu_yn) %&gt;% 
+
+# Step 4: calculating the death rate as a percentage value
+summarize(death_tot=sum(death_yn==&#39;Yes&#39;),total=n()) %&gt;% 
+mutate(death_rate=(death_tot/total*100)) %&gt;%
+select(sex,age_group,death_rate,icu_yn) 
+
+new_labels_ICU&lt;-c(&#39;Yes&#39;=&#39;Admitted to ICU&#39;,&#39;No&#39;=&#39;No ICU&#39;)
+
+# Step 5: plotting 
+ggplot(covid_death_rate_icu,aes(x=death_rate,y=age_group))+
+  geom_col(fill=&#39;#ff9984&#39;)+
+  facet_grid(icu_yn~sex,as.table=FALSE,labeller=labeller(icu_yn=new_labels_ICU))+
+  geom_text(aes(label=round(death_rate,digits=1)),hjust=-0.1,size=3)+
+  expand_limits(x=c(2))+
+  theme_bw()+
+  scale_x_continuous ()+
+  labs(title=&#39;Covid death % by age group, sex, and whether patient was admitted to ICU&#39;,x=&#39;&#39;,y=&#39;&#39;,caption=&#39;Source: CDC&#39;)+
+  theme(plot.title=element_text(size=12))</code></pre>
+<pre class="r"><code>knitr::include_graphics(here::here(&quot;static&quot;,&#39;img&#39;,&#39;blogs&#39;, &#39;covid3.PNG&#39;), error = FALSE)</code></pre>
+<p><img src="C:/Users/DELL/Desktop/LBS%20Preparation/Data%20Analytics%20for%20Finance/Git/mywebsite2/static/img/blogs/covid3.PNG" width="617" /></p>
+</div>
+</div>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://www.facebook.com/maggie.luo.90834" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                
+                    <li><a href="https://www.instagram.com/owl_c_m/" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+                
+                    <li><a href="https://www.github.com/yluo979" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/yu-maggie-luo-b91845183" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Yu</li>
+                
+                <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>
