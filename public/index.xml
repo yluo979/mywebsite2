@@ -53,7 +53,7 @@ Useful Package and Dataframes# Useful packages for plot# install.packages(&amp
       
       <guid>/projects/covid/</guid>
       <description>CDC COVID-19 Public Use DataVisit the CDC Covid-19 Case Surveillance Data. There are well over 3 million entries of individual, de-identified patient data. Since this is a large file.
-url&amp;lt;-&amp;#39;https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD&amp;#39;covid_data &amp;lt;- vroom::vroom(url)%&amp;gt;% clean_names()glimpse(covid_data)knitr::include_graphics(here::here(&amp;quot;static&amp;quot;,&amp;#39;img&amp;#39;,&amp;#39;projects&amp;#39;, &amp;#39;covid1.PNG&amp;#39;), error = FALSE)Given the data, I would like to produce two graphs that show death % rate:
+url&amp;lt;-&amp;#39;https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD&amp;#39;covid_data &amp;lt;- vroom::vroom(url)%&amp;gt;% clean_names()glimpse(covid_data)knitr::include_graphics(here::here(&amp;quot;static&amp;quot;,&amp;#39;img&amp;#39;,&amp;#39;projects&amp;#39;, &amp;#39;covid1.jpg&amp;#39;), error = FALSE)Given the data, I would like to produce two graphs that show death % rate:
 by age group, sex, and whether the patient had co-morbidities or notby age group, sex, and whether the patient was admited to Intensive Care Unit (ICU) or not.</description>
     </item>
     
