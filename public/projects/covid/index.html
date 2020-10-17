@@ -90,8 +90,8 @@
 covid_data &lt;- vroom::vroom(url)%&gt;% 
   clean_names()
 glimpse(covid_data)</code></pre>
-<pre class="r"><code>knitr::include_graphics(here::here(&quot;static&quot;,&#39;img&#39;,&#39;blogs&#39;, &#39;covid1.PNG&#39;), error = FALSE)</code></pre>
-<p><img src="C:/Users/DELL/Desktop/LBS%20Preparation/Data%20Analytics%20for%20Finance/Git/mywebsite2/static/img/blogs/covid1.PNG" width="696" /></p>
+<pre class="r"><code>knitr::include_graphics(here::here(&quot;static&quot;,&#39;img&#39;,&#39;projects&#39;, &#39;covid1.PNG&#39;), error = FALSE)</code></pre>
+<p><img src="C:/Users/DELL/Desktop/LBS%20Preparation/Data%20Analytics%20for%20Finance/Git/mywebsite2/static/img/projects/covid1.PNG" width="696" /></p>
 <p>Given the data, I would like to produce two graphs that show death % rate:</p>
 <ol style="list-style-type: decimal">
 <li>by age group, sex, and whether the patient had co-morbidities or not</li>
@@ -126,8 +126,8 @@ ggplot(covid_death_rate_comorbidities,aes(x=death_rate,y=age_group))+
   scale_x_continuous ()+
   labs(title=&#39;Covid death % by age group, sex, and presence of co-morbidities&#39;,x=&#39;&#39;,y=&#39;&#39;,caption=&#39;Source: CDC&#39;)+
   theme(plot.title=element_text(size=12))</code></pre>
-<pre class="r"><code>knitr::include_graphics(here::here(&quot;static&quot;,&#39;img&#39;,&#39;blogs&#39;, &#39;covid2.PNG&#39;), error = FALSE)</code></pre>
-<p><img src="C:/Users/DELL/Desktop/LBS%20Preparation/Data%20Analytics%20for%20Finance/Git/mywebsite2/static/img/blogs/covid2.PNG" width="624" /></p>
+<pre class="r"><code>knitr::include_graphics(here::here(&quot;static&quot;,&#39;img&#39;,&#39;projects&#39;, &#39;covid2.PNG&#39;), error = FALSE)</code></pre>
+<p><img src="C:/Users/DELL/Desktop/LBS%20Preparation/Data%20Analytics%20for%20Finance/Git/mywebsite2/static/img/projects/covid2.PNG" width="624" /></p>
 </div>
 <div id="creating-graph-no.2" class="section level2">
 <h2>Creating graph No.2</h2>
@@ -158,8 +158,8 @@ ggplot(covid_death_rate_icu,aes(x=death_rate,y=age_group))+
   scale_x_continuous ()+
   labs(title=&#39;Covid death % by age group, sex, and whether patient was admitted to ICU&#39;,x=&#39;&#39;,y=&#39;&#39;,caption=&#39;Source: CDC&#39;)+
   theme(plot.title=element_text(size=12))</code></pre>
-<pre class="r"><code>knitr::include_graphics(here::here(&quot;static&quot;,&#39;img&#39;,&#39;blogs&#39;, &#39;covid3.PNG&#39;), error = FALSE)</code></pre>
-<p><img src="C:/Users/DELL/Desktop/LBS%20Preparation/Data%20Analytics%20for%20Finance/Git/mywebsite2/static/img/blogs/covid3.PNG" width="617" /></p>
+<pre class="r"><code>knitr::include_graphics(here::here(&quot;static&quot;,&#39;img&#39;,&#39;projects&#39;, &#39;covid3.PNG&#39;), error = FALSE)</code></pre>
+<p><img src="C:/Users/DELL/Desktop/LBS%20Preparation/Data%20Analytics%20for%20Finance/Git/mywebsite2/static/img/projects/covid3.PNG" width="617" /></p>
 </div>
 </div>
 

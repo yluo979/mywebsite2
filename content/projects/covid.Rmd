@@ -38,7 +38,7 @@ glimpse(covid_data)
 ```
 
 ```{r,eval=TRUE}
-knitr::include_graphics(here::here("static",'img','blogs', 'covid1.PNG'), error = FALSE)
+knitr::include_graphics(here::here("static",'img','projects', 'covid1.PNG'), error = FALSE)
 ```
 
 
@@ -80,7 +80,7 @@ ggplot(covid_death_rate_comorbidities,aes(x=death_rate,y=age_group))+
 ```
 
 ```{r,eval=TRUE}
-knitr::include_graphics(here::here("static",'img','blogs', 'covid2.PNG'), error = FALSE)
+knitr::include_graphics(here::here("static",'img','projects', 'covid2.PNG'), error = FALSE)
 ```
 
 ## Creating graph No.2
@@ -116,5 +116,5 @@ ggplot(covid_death_rate_icu,aes(x=death_rate,y=age_group))+
 ```
 
 ```{r,eval=TRUE}
-knitr::include_graphics(here::here("static",'img','blogs', 'covid3.PNG'), error = FALSE)
+knitr::include_graphics(here::here("static",'img','projects', 'covid3.PNG'), error = FALSE)
 ```

@@ -145,8 +145,8 @@ disqusShortname = ""
   [params.two]
     enable = true
     title = "About me"
-    subtitle = """More about me"""
-    buttonText = "Get Started"
+    subtitle = """Introduction and resume"""
+    buttonText = "Click here"
     url = "blogs"
 
 
