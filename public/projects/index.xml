@@ -29,14 +29,14 @@ Useful Package and Dataframes# Useful packages for plot# install.packages(&amp
     </item>
     
     <item>
-      <title>Covid-19</title>
-      <link>/projects/covid/</link>
+      <title>Drinks Analysis</title>
+      <link>/projects/drinks/</link>
       <pubDate>Fri, 16 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/projects/covid/</guid>
-      <description>CDC COVID-19 Public Use DataVisit the CDC Covid-19 Case Surveillance Data. There are well over 3 million entries of individual, de-identified patient data. Since this is a large file.
-url&amp;lt;-&amp;#39;https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD&amp;#39;covid_data &amp;lt;- vroom::vroom(url)%&amp;gt;% clean_names()glimpse(covid_data)knitr::include_graphics(here::here(&amp;quot;static&amp;quot;,&amp;#39;img&amp;#39;,&amp;#39;projects&amp;#39;, &amp;#39;covid1.jpg&amp;#39;), error = FALSE)Given the data, I would like to produce two graphs that show death % rate:
-by age group, sex, and whether the patient had co-morbidities or notby age group, sex, and whether the patient was admited to Intensive Care Unit (ICU) or not.</description>
+      <guid>/projects/drinks/</guid>
+      <description>#Where Do People Drink The Most Beer, Wine And Spirits?
+Back in 2014, fivethiryeight.com published an article on alchohol consumption in different countries.
+library(fivethirtyeight)## Some larger datasets need to be installed separately, like senators and## house_district_forecast. To install these, we recommend you install the## fivethirtyeightdata package by running:## install.packages(&amp;#39;fivethirtyeightdata&amp;#39;, repos =## &amp;#39;https://fivethirtyeightdata.github.io/drat/&amp;#39;, type = &amp;#39;source&amp;#39;)library(tidyverse) # Load ggplot2, dplyr, and all the other tidyverse packages## -- Attaching packages -------------------------------------------------------- tidyverse 1.</description>
     </item>
     
     <item>

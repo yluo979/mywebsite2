@@ -1,0 +1,87 @@
+---
+title: 'Drinks Analysis'
+date: "2020-10-16"
+description: 'Where Do People Drink The Most Beer, Wine And Spirits?'
+draft: false
+image: pic07.jpg
+keywords: ""
+slug: drinks
+categories:
+    - ""
+    - ""
+---
+
+#Where Do People Drink The Most Beer, Wine And Spirits?
+
+Back in 2014, [fivethiryeight.com](https://fivethirtyeight.com/features/dear-mona-followup-where-do-people-drink-the-most-beer-wine-and-spirits/) published an article on alchohol consumption in different countries.
+
+```{r, load_alcohol_data}
+library(fivethirtyeight)
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(fivethirtyeight)
+library(here)
+library(skimr)
+library(janitor)
+library(vroom)
+library(tidyquant)
+library(rvest)    # scrape websites
+library(purrr)  
+library(lubridate) #to handle dates
+data(drinks)
+
+# or download directly
+# alcohol_direct <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/alcohol-consumption/drinks.csv")
+
+```
+
+## Have a Look at data
+
+```{r glimpse_skim_data}
+# YOUR CODE GOES HERE
+glimpse(drinks)
+skim(drinks)
+```
+We can see there are two variable types: Character and numeric.
+Also, there is no missing values under n_missing.
+
+
+```{r beer_plot}
+drinks %>%
+  arrange(desc(beer_servings)) %>% 
+  head(25) %>% 
+  ggplot(aes(x = beer_servings, y =reorder(country, beer_servings))) +
+  labs(title = "Top 25 Beer Consuming Countries", x = 'Country', y = 'Beer Servings') +
+  geom_col()
+
+```
+
+
+```{r wine_plot}
+drinks %>% 
+  arrange(desc(wine_servings)) %>% 
+  head(25) %>% 
+  ggplot(aes(x = wine_servings, y = reorder(country, wine_servings))) +
+  labs(title = "Top 25 Wine Consuming Countries", x = 'Country', y = 'Wine Servings') +
+  geom_col()
+
+```
+
+```{r spirit_plot}
+drinks %>% 
+  arrange(desc(spirit_servings)) %>% 
+  head(25) %>% 
+  ggplot(aes(x = spirit_servings, y = reorder(country, spirit_servings))) +
+  labs(title = "Top 25 Spirit Consuming Countries", x = 'Country', y = 'Spirit Servings') +
+  geom_col()
+
+```
+
+#Findings
+
+>The 3 plots display relatively predictable results about the different drinking habits of various nations. Looking at the wine graph first, it is unsurprising to see 2 of the 3 top wine producing nations in the top 15 consumers of the beverage. The number 1 wine producer in 2019 was France, and this is reflected through their position at the top of the wine consumption graph, while 2nd place Italy is somewhat further down the list. Possibly surprising is the exclusion of Spain in the graph, as they stood as the 3rd highest producer of wine last year, but this is likely an outlier as many of the other top producing nations also appear in the top 15 consumption graph.
+The beer consumption graph also displays quite predictable results when one looks at the countries within it. As expected, many of the countries that make up the top 15 are Anglo Saxon (US/Ireland/Australia) or Central European (Germany/Poland/Netherlands etc), and this accurately reflects the drinking culture prevalent in those nations. Namibia's position as the top country can be explained by its German links and culture, having spent decades under German colonisation. 
+Finally, the results displayed in the spirit consumption graph can be attributed to the different spirits produced in each of the regions present. The large quantity of Carribean countries in the graph is likely due to the high levels of production/consumption of rum that occurs in the region, combined with various cocktails due to its popularity as a holiday destination. The presence of the Russian Federation and other Eastern European countries can likely be attributed to the production and consumption of vodka, which started in Russia and was adopted by its satellite states during the period of the USSR.
+# Analysis of movies- IMDB dataset

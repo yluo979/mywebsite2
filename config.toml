@@ -121,10 +121,10 @@ disqusShortname = ""
       url = "projects/climate"
 
     [[params.tiles.showcase]]
-      title = "Covid-19"
-      subtitle = "CDC COVID-19 Public Use Data"
+      title = "Drinks Analysis"
+      subtitle = "Where Do People Drink The Most Beer, Wine And Spirits?"
       image = "pic04.jpg"
-      url = "projects/covid"
+      url = "projects/drinks"
     
 
    # [[params.tiles.showcase]]
