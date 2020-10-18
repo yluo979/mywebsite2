@@ -29,7 +29,6 @@ library(vroom)
 library(infer)
 ```
 
-
 ```{r load data, warning=FALSE, eval=FALSE, cache=TRUE}
 url<-'https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD'
 covid_data <- vroom::vroom(url)%>% 
