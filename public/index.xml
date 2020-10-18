@@ -6,7 +6,16 @@
     <description>Recent content on Portfolio website for Yu Luo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 18 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Resume</title>
+      <link>/blogs/resume/</link>
+      <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/resume/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Climate Change</title>
       <link>/projects/climate/</link>
@@ -16,15 +25,6 @@
       <description>I want to study climate change, with data on the Combined Land-Surface Air and Sea-Surface Water Temperature Anomalies in the Northern Hemisphere at NASA’s Goddard Institute for Space Studies. The tabular data of temperature anomalies can be found here
 To define temperature anomalies I need to have a reference, or base, period which NASA clearly states that it is the period between 1951-1980.
 Run the code below to load the file:</description>
-    </item>
-    
-    <item>
-      <title>Resume</title>
-      <link>/blogs/resume/</link>
-      <pubDate>Sat, 17 Oct 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/blogs/resume/</guid>
-      <description></description>
     </item>
     
     <item>
@@ -52,9 +52,8 @@ Useful Package and Dataframes# Useful packages for plot# install.packages(&amp
       <pubDate>Fri, 16 Oct 2020 00:00:00 +0000</pubDate>
       
       <guid>/projects/drinks/</guid>
-      <description>#Where Do People Drink The Most Beer, Wine And Spirits?
-Back in 2014, fivethiryeight.com published an article on alchohol consumption in different countries.
-library(fivethirtyeight)## Some larger datasets need to be installed separately, like senators and## house_district_forecast. To install these, we recommend you install the## fivethirtyeightdata package by running:## install.packages(&amp;#39;fivethirtyeightdata&amp;#39;, repos =## &amp;#39;https://fivethirtyeightdata.github.io/drat/&amp;#39;, type = &amp;#39;source&amp;#39;)library(tidyverse) # Load ggplot2, dplyr, and all the other tidyverse packages## -- Attaching packages -------------------------------------------------------- tidyverse 1.</description>
+      <description>Where Do People Drink The Most Beer, Wine And Spirits?Back in 2014, fivethiryeight.com published an article on alchohol consumption in different countries.
+Have a Look at data# YOUR CODE GOES HEREglimpse(drinks)## Rows: 193## Columns: 5## $ country &amp;lt;chr&amp;gt; &amp;quot;Afghanistan&amp;quot;, &amp;quot;Albania&amp;quot;, &amp;quot;Algeria&amp;quot;, &amp;quot;...## $ beer_servings &amp;lt;int&amp;gt; 0, 89, 25, 245, 217, 102, 193, 21, 261...## $ spirit_servings &amp;lt;int&amp;gt; 0, 132, 0, 138, 57, 128, 25, 179, 72, .</description>
     </item>
     
     <item>

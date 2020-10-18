@@ -11,11 +11,11 @@ categories:
     - ""
 ---
 
-#Where Do People Drink The Most Beer, Wine And Spirits?
+# Where Do People Drink The Most Beer, Wine And Spirits?
 
 Back in 2014, [fivethiryeight.com](https://fivethirtyeight.com/features/dear-mona-followup-where-do-people-drink-the-most-beer-wine-and-spirits/) published an article on alchohol consumption in different countries.
 
-```{r, load_alcohol_data}
+```{r, load_alcohol_data,warning=FALSE, message=FALSE, echo=FALSE}
 library(fivethirtyeight)
 library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
 library(mosaic)

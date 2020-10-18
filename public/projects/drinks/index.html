@@ -83,123 +83,9 @@
                             
 
 
-<p>#Where Do People Drink The Most Beer, Wine And Spirits?</p>
+<div id="where-do-people-drink-the-most-beer-wine-and-spirits" class="section level1">
+<h1>Where Do People Drink The Most Beer, Wine And Spirits?</h1>
 <p>Back in 2014, <a href="https://fivethirtyeight.com/features/dear-mona-followup-where-do-people-drink-the-most-beer-wine-and-spirits/">fivethiryeight.com</a> published an article on alchohol consumption in different countries.</p>
-<pre class="r"><code>library(fivethirtyeight)</code></pre>
-<pre><code>## Some larger datasets need to be installed separately, like senators and
-## house_district_forecast. To install these, we recommend you install the
-## fivethirtyeightdata package by running:
-## install.packages(&#39;fivethirtyeightdata&#39;, repos =
-## &#39;https://fivethirtyeightdata.github.io/drat/&#39;, type = &#39;source&#39;)</code></pre>
-<pre class="r"><code>library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages</code></pre>
-<pre><code>## -- Attaching packages -------------------------------------------------------- tidyverse 1.3.0 --</code></pre>
-<pre><code>## √ ggplot2 3.3.2     √ purrr   0.3.4
-## √ tibble  3.0.3     √ dplyr   1.0.2
-## √ tidyr   1.1.1     √ stringr 1.4.0
-## √ readr   1.3.1     √ forcats 0.5.0</code></pre>
-<pre><code>## -- Conflicts ----------------------------------------------------------- tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(mosaic)</code></pre>
-<pre><code>## Registered S3 method overwritten by &#39;mosaic&#39;:
-##   method                           from   
-##   fortify.SpatialPolygonsDataFrame ggplot2</code></pre>
-<pre><code>## 
-## The &#39;mosaic&#39; package masks several functions from core packages in order to add 
-## additional features.  The original behavior of these functions should not be affected by this.</code></pre>
-<pre><code>## 
-## 载入程辑包：&#39;mosaic&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:Matrix&#39;:
-## 
-##     mean</code></pre>
-<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
-## 
-##     count, do, tally</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     cross</code></pre>
-<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     stat</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     binom.test, cor, cor.test, cov, fivenum, IQR, median, prop.test,
-##     quantile, sd, t.test, var</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     max, mean, min, prod, range, sample, sum</code></pre>
-<pre class="r"><code>library(ggthemes)</code></pre>
-<pre><code>## 
-## 载入程辑包：&#39;ggthemes&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:mosaic&#39;:
-## 
-##     theme_map</code></pre>
-<pre class="r"><code>library(lubridate)</code></pre>
-<pre><code>## 
-## 载入程辑包：&#39;lubridate&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     date, intersect, setdiff, union</code></pre>
-<pre class="r"><code>library(fivethirtyeight)
-library(here)</code></pre>
-<pre><code>## here() starts at C:/Users/DELL/Desktop/LBS Preparation/Data Analytics for Finance/Git/mywebsite2</code></pre>
-<pre class="r"><code>library(skimr)</code></pre>
-<pre><code>## 
-## 载入程辑包：&#39;skimr&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:mosaic&#39;:
-## 
-##     n_missing</code></pre>
-<pre class="r"><code>library(janitor)</code></pre>
-<pre><code>## 
-## 载入程辑包：&#39;janitor&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     chisq.test, fisher.test</code></pre>
-<pre class="r"><code>library(vroom)
-library(tidyquant)</code></pre>
-<pre><code>## 载入需要的程辑包：PerformanceAnalytics</code></pre>
-<pre><code>## 载入需要的程辑包：xts</code></pre>
-<pre><code>## 载入需要的程辑包：zoo</code></pre>
-<pre><code>## 
-## 载入程辑包：&#39;zoo&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     as.Date, as.Date.numeric</code></pre>
-<pre><code>## 
-## 载入程辑包：&#39;xts&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
-## 
-##     first, last</code></pre>
-<pre><code>## 
-## 载入程辑包：&#39;PerformanceAnalytics&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:graphics&#39;:
-## 
-##     legend</code></pre>
-<pre><code>## 载入需要的程辑包：quantmod</code></pre>
-<pre><code>## 载入需要的程辑包：TTR</code></pre>
-<pre><code>## Registered S3 method overwritten by &#39;quantmod&#39;:
-##   method            from
-##   as.zoo.data.frame zoo</code></pre>
-<pre><code>## Version 0.4-0 included new data defaults. See ?getSymbols.</code></pre>
-<pre><code>## == Need to Learn tidyquant? =====================================================================
-## Business Science offers a 1-hour course - Learning Lab #9: Performance Analysis &amp; Portfolio Optimization with tidyquant!
-## &lt;/&gt; Learn more at: https://university.business-science.io/p/learning-labs-pro &lt;/&gt;</code></pre>
-<pre class="r"><code>library(rvest)    # scrape websites</code></pre>
-<pre><code>## 载入需要的程辑包：xml2</code></pre>
-<pre><code>## 
-## 载入程辑包：&#39;rvest&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     pluck</code></pre>
-<pre><code>## The following object is masked from &#39;package:readr&#39;:
-## 
-##     guess_encoding</code></pre>
-<pre class="r"><code>library(purrr)  
-library(lubridate) #to handle dates
-data(drinks)
-
-# or download directly
-# alcohol_direct &lt;- read_csv(&quot;https://raw.githubusercontent.com/fivethirtyeight/data/master/alcohol-consumption/drinks.csv&quot;)</code></pre>
 <div id="have-a-look-at-data" class="section level2">
 <h2>Have a Look at data</h2>
 <pre class="r"><code># YOUR CODE GOES HERE
@@ -382,6 +268,7 @@ The beer consumption graph also displays quite predictable results when one look
 Finally, the results displayed in the spirit consumption graph can be attributed to the different spirits produced in each of the regions present. The large quantity of Carribean countries in the graph is likely due to the high levels of production/consumption of rum that occurs in the region, combined with various cocktails due to its popularity as a holiday destination. The presence of the Russian Federation and other Eastern European countries can likely be attributed to the production and consumption of vodka, which started in Russia and was adopted by its satellite states during the period of the USSR.
 # Analysis of movies- IMDB dataset</p>
 </blockquote>
+</div>
 </div>
 
                         </div>

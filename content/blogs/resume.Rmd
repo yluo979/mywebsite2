@@ -10,8 +10,3 @@ keywords: ""
 slug: resume
 title: Resume
 ---
-
-```{r,eval=TRUE,echo=FALSE}
-knitr::include_graphics(here::here("static",'img','blogs', 'resume1.jpg'), error = FALSE)
-knitr::include_graphics(here::here("static",'img','blogs', 'resume2.jpg'), error = FALSE)
-```
